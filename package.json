@@ -26,6 +26,8 @@
     "express-messages": "*",
     "express-session": "^1.14.2",
     "express-validator": "*",
+    "express.io": "^1.1.13",
+    "fs": "0.0.1-security",
     "google-finance": "^0.1.9",
     "handlebars": "^4.0.6",
     "hjs": "~0.0.6",
@@ -52,6 +54,7 @@
     "react-router": "^3.0.2",
     "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
+    "socket.io-client": "^1.7.3",
     "superagent": "^3.3.1",
     "yelp": "^1.0.2",
     "yfinance": "0.0.6"
