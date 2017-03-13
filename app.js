@@ -55,6 +55,11 @@ io.on("connection",socket=>{
     //io.emit('chat message', msg);
     socket.broadcast.emit("chat message",msg)
   });
+  socket.on('delete message', function(msg){
+    console.log('delete message is: ' + msg);
+    //io.emit('chat message', msg);
+    socket.broadcast.emit("delete message",msg)
+  });
 })
 
 // view engine setup

@@ -51,19 +51,20 @@ class Yelphome extends Component {
        
        
         window.socket.on('chat message', (msg)=>{
-        
-        tarray = this.state.messages;
-        tarray.push(msg);
-        this.setState({messages:tarray,messagewrite:msg.body})
-        this.rchart(msg.body);
-  });
+            tarray = this.state.messages;
+            tarray.push(msg);
+            this.setState({messages:tarray,messagewrite:msg.body})
+            this.rchart(msg.body);
+        });
   
-  
-  
-  //create chart
-  
-  //end chart
-  
+
+      //new code
+        window.socket.on('delete message', (msg)=>{
+            console.log("delete message arrived",msg)
+            this.handledeletetwo(msg.body)
+             
+        });
+        //new code ends
     }
     
     rchart(a){
@@ -114,12 +115,38 @@ class Yelphome extends Component {
         this.setState({messagewrite:event.target.value})
         
     }
-   
-   handledelete(e){
-       console.log("delete button clicked")
+    
+    handledeletetwo(x){
+         console.log("remote delete occuring",x);
+         var id ;
+         for(var i =0;i<this.state.fdata;i++){
+             if(this.state.fdata[i].body===x){
+                 id =i;
+             }
+             
+             
+         }
+         
+          var mt =this.state.messages;
+       var selected = mt[id];
+       var dd = this.state.fdata;
+       
+       mt.splice(id,1);
+       dd.splice(id,1);
+       
+       this.setState({messages:mt,fdata: dd}, () => {
+           // setState is async 
+        console.log("after deleting",this.state.fdata);   
+             
+       })
+         
+         
+         
+         /*
        
        var id = e.target.id;
        var mt =this.state.messages;
+       var selected = mt[id];
        var dd = this.state.fdata;
              
        console.log("b4 mt dd ===>>", this.state.messages, this.state.fdata);
@@ -131,7 +158,46 @@ class Yelphome extends Component {
         console.log("after deleting",this.state.fdata);   
              
        })
+       
+       //new code
+       var theMsg = this.state.messagewrite;   
+       console.log("this is mt",mt)
+       console.log("selected symbol stock",selected);
+       window.socket.emit('delete message', selected);
+       // add a console.log on this line to see if it makes it through the previous lines
+       //new code ends
+      console.log("delete message emitted")
       
+      */
+        
+    }
+   
+   handledelete(e){
+       console.log("delete button clicked")
+       
+       var id = e.target.id;
+       var mt =this.state.messages;
+       var selected = mt[id];
+       var dd = this.state.fdata;
+             
+       console.log("b4 mt dd ===>>", this.state.messages, this.state.fdata);
+       mt.splice(id,1);
+       dd.splice(id,1);
+       
+       this.setState({messages:mt,fdata: dd}, () => {
+           // setState is async 
+        console.log("after deleting",this.state.fdata);   
+             
+       })
+       
+       //new code
+       var theMsg = this.state.messagewrite;   
+       console.log("this is mt",mt)
+       console.log("selected symbol stock",selected);
+       window.socket.emit('delete message', selected);
+       // add a console.log on this line to see if it makes it through the previous lines
+       //new code ends
+      console.log("delete message emitted")
    }
    handleSubmit=event=>{
        //d3 request 
